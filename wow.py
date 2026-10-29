@@ -46,4 +46,17 @@ def calculate_running_total(src: str, dest: str) -> int:
 
     return total
 
-def
+def export_leaderboard(leaderboard, destination):
+    
+    try:
+        with open(destination, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["Name", "Duration"])
+            for name, duration in leaderboard.items():
+                if duration is not None:
+                    writer.writerow([name, str(f'{duration.hours},{duration.minutes:02d},{duration.seconds:02d}' )])
+                else:
+                    writer.writerow([name, ""])
+    except (OSError, csv.Error, IndexError, ValueError) as e:
+        raise ValueError(f"Error processing files: {destination}") from e
+               
