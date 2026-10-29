@@ -46,17 +46,39 @@ def calculate_running_total(src: str, dest: str) -> int:
 
     return total
 
-def export_leaderboard(leaderboard, destination):
-    
-    try:
+import csv
+from datetime import timedelta
+
+
+def export_leaderboard(
+    leaderboard: dict[str, timedelta | None], destination: str) -> None:
+  try:
         with open(destination, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(["Name", "Duration"])
+            writer.writerow(["Name", "Hour", "Minute", "Second"])
             for name, duration in leaderboard.items():
                 if duration is not None:
-                    writer.writerow([name, str(f'{duration.hours},{duration.minutes:02d},{duration.seconds:02d}' )])
+                    total = int(duration.total_seconds())
+                    hours, rest = divmod(total, 3600)
+                    minutes, seconds = divmod(rest, 60)
+                    writer.writerow([name, hours, minutes, seconds])
                 else:
-                    writer.writerow([name, ""])
+                    writer.writerow([name, "", "", ""])
+    except (OSError, csv.Error) as e:
+        raise ValueError(f"Error exporting leaderboard to {destination}") from e
+
+def import_leaderboard(leaderboard, nameandtime):
+    try:
+        with open(leaderboard, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["Name", "Hour", "Minute", "Second"])
+            for name, Duration in nameandtime.items():
+                if name not in leaderboard:
+                    if Duration is not None:
+                        writer.writerow([name, str(f'{Duration.hours}'), str(f'{Duration.minutes:02d}'), str(f'{Duration.seconds:02d}')])
+                    else:
+                        writer.writerow([name, ""])
+
     except (OSError, csv.Error, IndexError, ValueError) as e:
-        raise ValueError(f"Error processing files: {destination}") from e
-               
+        raise ValueError(f"Error processing files: {leaderboard}") from e
+
