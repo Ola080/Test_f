@@ -12,3 +12,15 @@ void minfunction(int size, double values[])
 
 
 }
+
+void stringconversion(int newsize, int size, char newarray[], char array[][])
+{
+    int temp = 0 
+    for (int x=0; x<size; x++)
+    {
+        temp = strlen(array[x])
+        strcpy(newarray[x],temp )
+
+    }
+
+}
