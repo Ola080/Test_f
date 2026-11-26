@@ -18,18 +18,18 @@ double distance(struct point p1, struct point p2)
 
 int analyse(double *prod, double *sum, double d1, double d2)
 {
-    double dd1 = floor(dd1);
-    double dd2 = floor(dd2);
+    double dd1 = floor(d1);
+    double dd2 = floor(d2);
+    int sign;
 
-    if (d1<0 && d2<0 || d1>0 && d2>0)
-    int sign = 1;
-
+    if ((d1 < 0 && d2 < 0) || (d1 > 0 && d2 > 0))
+        sign = 1;
     else
-    int sign = -1;
-    
-    double *prod = dd1*dd2;
-    
-    double *sum = dd2+dd1;
+        sign = -1;
 
-    return (sign);
+    *prod = dd1 * dd2;
+    *sum  = dd1 + dd2;
+
+    return sign;
 }
+
