@@ -14,16 +14,22 @@ double distance(struct point p1, struct point p2)
     return sqrt(dx * dx + dy * dy);
 }
 
+
+
 int analyse(double *prod, double *sum, double d1, double d2)
 {
     double dd1 = floor(dd1);
     double dd2 = floor(dd2);
 
     if (d1<0 && d2<0 || d1>0 && d2>0)
-    sign = 1
+    int sign = 1;
 
     else
-    sign = -1
+    int sign = -1;
+    
+    double *prod = dd1*dd2;
+    
+    double *sum = dd2+dd1;
 
-    return (sign, (dd1*dd2), (dd1+dd2))
+    return (sign);
 }
